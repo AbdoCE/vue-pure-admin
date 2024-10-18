@@ -30,7 +30,7 @@ onBeforeMount(() => {
 
 const userInfo = ref({
   avatar: "",
-  username: "",
+  user_email: "",
   nickname: ""
 });
 const panes = [
@@ -90,7 +90,7 @@ getMine().then(res => {
               {{ userInfo.nickname }}
             </ReText>
             <ReText class="!self-baseline" type="info">
-              {{ userInfo.username }}
+              {{ userInfo.user_email }}
             </ReText>
           </div>
         </div>

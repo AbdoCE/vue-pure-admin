@@ -33,7 +33,7 @@ function onChange() {
   useUserStoreHook()
     .loginByUsername({ username: username.value, password: "admin123" })
     .then(res => {
-      if (res.success) {
+      if (res.err) {
         storageLocal().removeItem("async-routes");
         usePermissionStoreHook().clearAllCachePage();
         initRouter();
@@ -45,7 +45,10 @@ function onChange() {
 <template>
   <div>
     <p class="mb-2">
-      模拟后台根据不同角色返回对应路由，观察左侧菜单变化（管理员角色可查看系统管理菜单、普通角色不可查看系统管理菜单）
+      Mô phỏng backend trả về các tuyến đường tương ứng dựa trên vai trò khác
+      nhau, quan sát sự thay đổi của menu bên trái (vai trò quản trị viên có thể
+      xem menu quản lý hệ thống, vai trò thông thường không thể xem menu quản lý
+      hệ thống)
     </p>
     <el-card shadow="never" :style="elStyle">
       <template #header>

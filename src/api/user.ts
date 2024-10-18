@@ -1,12 +1,13 @@
 import { http } from "@/utils/http";
 
 export type UserResult = {
-  success: boolean;
+  err: boolean;
+  msg: string;
   data: {
     /** 头像 */
     avatar: string;
     /** 用户名 */
-    username: string;
+    user_email: string;
     /** 昵称 */
     nickname: string;
     /** 当前登录用户的角色 */
@@ -38,7 +39,7 @@ export type UserInfo = {
   /** 头像 */
   avatar: string;
   /** 用户名 */
-  username: string;
+  user_email: string;
   /** 昵称 */
   nickname: string;
   /** 邮箱 */
@@ -70,7 +71,9 @@ type ResultTable = {
 
 /** 登录 */
 export const getLogin = (data?: object) => {
-  return http.request<UserResult>("post", "/login", { data });
+  return http.request<UserResult>("post", "http://localhost:3001/auth/login", {
+    data
+  });
 };
 
 /** 刷新`token` */

@@ -68,9 +68,12 @@ const onLogin = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true;
       useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: "admin123" })
+        .loginByUsername({
+          user_email: ruleForm.username,
+          user_password: ruleForm.password
+        })
         .then(res => {
-          if (res.success) {
+          if (!res.err) {
             // 获取后端路由
             return initRouter().then(() => {
               disabled.value = true;
@@ -82,7 +85,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
                 .finally(() => (disabled.value = false));
             });
           } else {
-            message(t("login.pureLoginFail"), { type: "error" });
+            message(res.msg, { type: "error" });
           }
         })
         .finally(() => (loading.value = false));
@@ -145,7 +148,7 @@ watch(loginDay, value => {
                 class="check-zh"
                 :icon="Check"
               />
-              简体中文
+              Tiếng Việt
             </el-dropdown-item>
             <el-dropdown-item
               :style="getDropdownItemStyle(locale, 'en')"
@@ -277,22 +280,6 @@ watch(loginDay, value => {
                 >
                   {{ t("login.pureLogin") }}
                 </el-button>
-              </el-form-item>
-            </Motion>
-
-            <Motion :delay="300">
-              <el-form-item>
-                <div class="w-full h-[20px] flex justify-between items-center">
-                  <el-button
-                    v-for="(item, index) in operates"
-                    :key="index"
-                    class="w-full mt-4"
-                    size="default"
-                    @click="useUserStoreHook().SET_CURRENTPAGE(index + 1)"
-                  >
-                    {{ t(item.title) }}
-                  </el-button>
-                </div>
               </el-form-item>
             </Motion>
           </el-form>
